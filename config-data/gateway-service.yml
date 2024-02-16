@@ -1,0 +1,49 @@
+server:
+  port: 8080
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: student-service
+          uri: lb://student-service
+          predicates:
+            - Path=/students/**
+        - id: itinerary-service
+          uri: lb://itinerary-service
+          predicates:
+            - Path=/intineraries/**
+        - id: concept-service
+          uri: lb://concept-service
+          predicates:
+            - Path=/concepts/**
+        - id: idea-service
+          uri: lb://idea-service
+          predicates:
+            - Path=/ideas/**
+        - id: badge-service
+          uri: lb://badge-service
+          predicates:
+            - Path=/badges/**
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

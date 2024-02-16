@@ -1,0 +1,27 @@
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  admin-paths:
+    paths:
+      - uri: "/students"
+        method: "POST"
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: authors
+      auto-index-creation: true
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

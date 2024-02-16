@@ -1,0 +1,36 @@
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+
+resilience4j.circuitbreaker:
+  instances:
+    gamesCB:
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowType: TIME_BASED
+      minimumNumberOfCalls: 4
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+spring:
+  application:
+    zipkin: http://localhost:9411
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
