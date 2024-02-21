@@ -42,13 +42,13 @@ public class ItineraryService implements ItineraryServiceInterface {
     }
 
     @Override
-    public ItineraryDTO getItineraryBy(int id) {
-        return itineraryRepository.findById(id).map(this::getItineraryDTOFromEntity)
+    public ItineraryDTO getItineraryBy(int itineraryId) {
+        return itineraryRepository.findById(itineraryId).map(this::getItineraryDTOFromEntity)
                 .orElseThrow(() -> new ItineraryNotFoundException("The itinerary does not exist"));
     }
 
-    public long getRemainingDaysBy(int id) {
-        return calculateRemainingDaysOf(itineraryRepository.findById(id).map(this::getItineraryDTOFromEntity)
+    public long getRemainingDaysBy(int itineraryId) {
+        return calculateRemainingDaysOf(itineraryRepository.findById(itineraryId).map(this::getItineraryDTOFromEntity)
                 .orElseThrow(() -> new ItineraryNotFoundException("The itinerary does not exist")));
     }
 

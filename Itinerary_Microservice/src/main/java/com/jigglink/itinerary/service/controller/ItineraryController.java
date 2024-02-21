@@ -26,9 +26,15 @@ public class ItineraryController {
         return ResponseEntity.ok(itineraryService.getItinerariesBy(studentUsername));
     }
 
+    @Operation(summary = "It obtains the itinerary information by an specific itinerary identification.")
+    @GetMapping("/{itineraryId}")
+    public ResponseEntity<ItineraryDTO> getItineraryBy(@PathVariable int itineraryId) {
+        return ResponseEntity.ok(itineraryService.getItineraryBy(itineraryId));
+    }
+
     @Operation(summary = "It obtains total remaining days by an specific itinerary.")
-    @GetMapping("/{id}/days")
-    public ResponseEntity<Long> getRemainingDaysBy(@PathVariable int id) {
-        return ResponseEntity.ok(itineraryService.getRemainingDaysBy(id));
+    @GetMapping("/{itineraryId}/days")
+    public ResponseEntity<Long> getRemainingDaysBy(@PathVariable int itineraryId) {
+        return ResponseEntity.ok(itineraryService.getRemainingDaysBy(itineraryId));
     }
 }
