@@ -25,4 +25,10 @@ public class ItineraryController {
     public ResponseEntity<?> getItinerariesBy(@PathVariable String studentUsername) {
         return ResponseEntity.ok(itineraryService.getItinerariesBy(studentUsername));
     }
+
+    @Operation(summary = "It obtains total remaining days by an specific itinerary.")
+    @GetMapping("/{id}/days")
+    public ResponseEntity<Long> getRemainingDaysBy(@PathVariable int id) {
+        return ResponseEntity.ok(itineraryService.getRemainingDaysBy(id));
+    }
 }

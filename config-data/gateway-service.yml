@@ -23,7 +23,7 @@ spring:
         - id: itinerary-service
           uri: lb://itinerary-service
           predicates:
-            - Path=/intineraries/**
+            - Path=/itineraries/**
         - id: concept-service
           uri: lb://concept-service
           predicates:
