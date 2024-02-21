@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,5 +62,9 @@ public class ItineraryService implements ItineraryServiceInterface {
 
     private ItineraryDTO setNewItineraryData(String username, ItineraryDTO itineraryToSet){
         return ItineraryDTO.builder().studentUsername(username).title(itineraryToSet.getTitle()).targetDate(itineraryToSet.getTargetDate()).points(0).build();
+    }
+    
+    private long calculateRemainingDaysOf (ItineraryDTO itineraryToCalculate) {
+        return LocalDate.now().until(itineraryToCalculate.getTargetDate(), ChronoUnit.DAYS);
     }
 }

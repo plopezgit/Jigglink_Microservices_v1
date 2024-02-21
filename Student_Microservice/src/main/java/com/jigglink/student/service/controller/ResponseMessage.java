@@ -1,4 +1,4 @@
-package com.plopez.diceroller.microservice.player.controller;
+package com.jigglink.student.service.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
