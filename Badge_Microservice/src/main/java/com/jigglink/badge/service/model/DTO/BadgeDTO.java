@@ -1,4 +1,4 @@
-package com.jigglink.badge.service.model.entity;
+package com.jigglink.badge.service.model.DTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,12 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
-@Table(name = "badge")
-public class Badge {
-    @Id
-    @Column(name="name")
+public class BadgeDTO {
     private String name;
+    private String studentUsername;
     private String coachMessage;
     private String icon;
 }

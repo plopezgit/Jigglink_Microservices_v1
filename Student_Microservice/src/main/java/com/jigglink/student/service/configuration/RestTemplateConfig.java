@@ -1,4 +1,4 @@
-package com.plopez.diceroller.microservice.game.configuration;
+package com.jigglink.student.service.configuration;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

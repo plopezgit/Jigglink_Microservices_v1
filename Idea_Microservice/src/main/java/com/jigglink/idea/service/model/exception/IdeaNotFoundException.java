@@ -1,4 +1,4 @@
-package com.jigglink.concept.service.model.exception;
+package com.jigglink.idea.service.model.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConceptNotFoundException extends RuntimeException {
+public class IdeaNotFoundException extends RuntimeException {
 
     private String message;
 }

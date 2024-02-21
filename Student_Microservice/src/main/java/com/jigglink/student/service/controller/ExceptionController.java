@@ -1,6 +1,8 @@
-package com.plopez.diceroller.microservice.player.controller;
+package com.jigglink.student.service.controller;
 
-import com.plopez.diceroller.microservice.player.model.exception.*;
+import com.jigglink.student.service.model.exception.EmptyItineraryListException;
+import com.jigglink.student.service.model.exception.StudentNotFoundException;
+import com.jigglink.student.service.model.exception.UsernameAlreadyExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -17,9 +19,9 @@ import java.util.Date;
 @RestControllerAdvice
 public class ExceptionController {
 
-    @ExceptionHandler(PlayerNotFoundException.class)
+    @ExceptionHandler(StudentNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ResponseEntity<ResponseMessage> playerNotFoundExceptionHandler(PlayerNotFoundException exception, WebRequest request) {
+    public ResponseEntity<ResponseMessage> studentNotFoundExceptionHandler(StudentNotFoundException exception, WebRequest request) {
         return new ResponseEntity<>(ResponseMessage.builder()
                 .responseCode(HttpStatus.NOT_FOUND.value())
                 .message(exception.getMessage())
@@ -28,9 +30,9 @@ public class ExceptionController {
                 .build(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(NickNameAlreadyExistException.class)
+    @ExceptionHandler(UsernameAlreadyExistException.class)
     @ResponseStatus(value = HttpStatus.ALREADY_REPORTED)
-    public ResponseEntity<ResponseMessage> nickNameAlreadyExistExceptionHandler(NickNameAlreadyExistException exception, WebRequest request) {
+    public ResponseEntity<ResponseMessage> usernameAlreadyExistExceptionHandler(UsernameAlreadyExistException exception, WebRequest request) {
         return new ResponseEntity<>(ResponseMessage.builder()
                 .responseCode(HttpStatus.ALREADY_REPORTED.value())
                 .message(exception.getMessage())
@@ -39,9 +41,9 @@ public class ExceptionController {
                 .build(), HttpStatus.ALREADY_REPORTED);
     }
 
-    @ExceptionHandler(EmptyGameListException.class)
+    @ExceptionHandler(EmptyItineraryListException.class)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public ResponseEntity<ResponseMessage> emptyGameListExceptionHandler(EmptyGameListException exception, WebRequest request) {
+    public ResponseEntity<ResponseMessage> emptyItineraryListExceptionHandler(EmptyItineraryListException exception, WebRequest request) {
         return new ResponseEntity<>(ResponseMessage.builder()
                 .responseCode(HttpStatus.NO_CONTENT.value())
                 .message(exception.getMessage())

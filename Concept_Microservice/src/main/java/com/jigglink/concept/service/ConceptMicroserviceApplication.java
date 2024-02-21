@@ -13,6 +13,10 @@ import org.springframework.context.annotation.Bean;
 @OpenAPIDefinition(info = @Info(title = "Concept microservice", description = "Process the information related to " +
 		"the Jigglink student itineray Concept; It is able to connect to idea microservice so a specific student itinerary concept is able to manage its own study ideas.", version = "1.0.0"))
 public class ConceptMicroserviceApplication {
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConceptMicroserviceApplication.class, args);

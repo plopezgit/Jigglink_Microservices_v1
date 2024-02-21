@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsernameAlreadyExistException extends RuntimeException {
+public class EmptyItineraryListException extends RuntimeException {
 
     private String message;
 }

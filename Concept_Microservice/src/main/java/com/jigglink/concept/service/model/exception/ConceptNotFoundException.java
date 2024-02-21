@@ -1,4 +1,4 @@
-package com.jigglink.itinerary.service.model.exception;
+package com.jigglink.concept.service.model.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItineraryNotFoundException extends RuntimeException {
+public class ConceptNotFoundException extends RuntimeException {
 
     private String message;
 }

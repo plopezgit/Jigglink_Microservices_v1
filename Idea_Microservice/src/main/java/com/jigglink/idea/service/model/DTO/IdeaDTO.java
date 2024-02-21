@@ -1,4 +1,4 @@
-package com.jigglink.idea.service.model.entity;
+package com.jigglink.idea.service.model.DTO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
