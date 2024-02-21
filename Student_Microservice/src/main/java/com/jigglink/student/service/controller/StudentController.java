@@ -1,7 +1,9 @@
 package com.jigglink.student.service.controller;
 
+import com.jigglink.student.service.model.DTO.ItineraryDTO;
 import com.jigglink.student.service.model.DTO.StudentDTO;
 import com.jigglink.student.service.model.service.StudentService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,20 @@ public class StudentController {
         } else {
             return new ResponseEntity<>(studentsDTO, HttpStatus.OK);
         }
+    }
+
+    @Operation(summary = "It creates a itinerary by a specific student.")
+    @CircuitBreaker(name="itineraryCB", fallbackMethod ="fallbackCreateItineraryBy")
+    @PostMapping("/{studentUsername}/itinerary")
+    public ResponseEntity<ItineraryDTO> createItineraryBy(@PathVariable String studentUsername, @RequestBody ItineraryDTO newItinerary) {
+        return ResponseEntity.ok(studentService.createItineraryBy(studentUsername, newItinerary));
+    }
+
+    @Operation(summary = "It obtains all the itineraries of a specific student.")
+    @CircuitBreaker(name="itineraryCB", fallbackMethod ="fallbackGetItineraries")
+    @GetMapping("/{studentUsername}/itineraries")
+    public ResponseEntity<List<ItineraryDTO>> getGamesBy(@PathVariable String studentUsername) {
+        return ResponseEntity.ok(studentService.getItinerariesBy(studentUsername));
     }
 
 }

@@ -1,12 +1,13 @@
 package com.jigglink.student.service.model.service;
 
+import com.jigglink.student.service.model.DTO.ItineraryDTO;
 import com.jigglink.student.service.model.entity.Student;
 import com.jigglink.student.service.model.DTO.StudentDTO;
 import com.jigglink.student.service.model.exception.*;
 import com.jigglink.student.service.model.repository.StudentRepository;
+import com.jigglink.student.service.model.service.interfaces.StudentServiceInterface;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class StudentService implements com.jigglink.student.service.model.service.interfaces.StudentService {
+public class StudentService implements StudentServiceInterface {
 
     @Autowired
     private StudentRepository studentRepository;
@@ -31,7 +32,7 @@ public class StudentService implements com.jigglink.student.service.model.servic
 
     @Override
     public StudentDTO createStudent(StudentDTO studentDTO) {
-        StudentDTO newStudent = StudentDTO.builder().username(setUsernameTo(studentDTO).getUsername()).build();
+        StudentDTO newStudent = StudentDTO.builder().username(setUsernameTo(studentDTO).getUsername()).password(studentDTO.getPassword()).build();
         if (existUsername(newStudent) && !isAnonymous(newStudent))
             throw new UsernameAlreadyExistException("The username already exist, please try another one.");
         studentRepository.save(getStudentEntityFromDTO(newStudent));
@@ -40,12 +41,22 @@ public class StudentService implements com.jigglink.student.service.model.servic
 
     @Override
     public StudentDTO getStudent(String username) {
-        return null;
+        return studentRepository.findById(username).map(this::getStudentDTOFromEntity)
+                .orElseThrow(() -> new StudentNotFoundException("The student does not exist."));
     }
 
     @Override
-    public ResponseEntity<Void> deleteStudent(String username) {
-        return null;
+    public List<ItineraryDTO> getItinerariesBy(String username) {
+        return studentRestTemplate.getForObject("http://itinerary-service/itineraries/student/" + username, List.class);
+    }
+
+    @Override
+    public ItineraryDTO createItineraryBy(String username, ItineraryDTO newItinerary) {
+        if (!studentRepository.existsById(username)) {
+            throw new StudentNotFoundException("The student does not exists.");
+        } else {
+            return studentRestTemplate.postForObject("http://itinerary-service/itineraries/"+ username +"/student", newItinerary, ItineraryDTO.class);
+        }
     }
 
     private StudentDTO getStudentDTOFromEntity(Student student) {
