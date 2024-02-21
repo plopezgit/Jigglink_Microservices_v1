@@ -1,0 +1,14 @@
+server:
+  port: 8081
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          default-label: master
+          uri: https://github.com/plopezgit/Jigglink_Microservices_v1
+          search-paths: config-data
+
+  application:
+    name: config-service
+
