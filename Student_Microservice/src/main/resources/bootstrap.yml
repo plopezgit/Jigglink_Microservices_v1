@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: student-service
+  cloud:
+    config:
+      enabled: true
+      uri: http://localhost:8081
+
+springdoc:
+  swagger-ui:
+    path: /student-service-documentation
