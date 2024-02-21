@@ -14,6 +14,11 @@ import org.springframework.context.annotation.Bean;
 		"the Jigglink student itinerary concept Idea.", version = "1.0.0"))
 public class IdeaMicroserviceApplication {
 
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(IdeaMicroserviceApplication.class, args);
 	}
