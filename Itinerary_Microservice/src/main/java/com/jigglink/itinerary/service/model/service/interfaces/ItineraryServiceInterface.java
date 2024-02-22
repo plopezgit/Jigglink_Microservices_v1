@@ -5,10 +5,10 @@ import com.jigglink.itinerary.service.model.DTO.ItineraryDTO;
 import java.util.List;
 
 public interface ItineraryServiceInterface {
-    public ItineraryDTO createItineraryBy(String studentUsername, ItineraryDTO newItinerary);
-    public List<ItineraryDTO> getItinerariesBy(String studentUsername);
-    public long getRemainingDaysBy(int itineraryId);
-    public List<ItineraryDTO> getItineraries();
-    public ItineraryDTO getItineraryBy(int itineraryId);
-    public void deleteItinerary(String studentUsername);
+    ItineraryDTO createItineraryBy(String studentUsername, ItineraryDTO newItinerary);
+    List<ItineraryDTO> getItinerariesBy(String studentUsername);
+    long getItineraryRemainingDaysBy(int itineraryId);
+    List<ItineraryDTO> getItineraries();
+    ItineraryDTO getItineraryBy(int itineraryId);
+    void deleteItinerary(String studentUsername);
 }

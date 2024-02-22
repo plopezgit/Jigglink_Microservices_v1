@@ -1,0 +1,31 @@
+package com.jigglink.concept.service.controller;
+
+import com.jigglink.concept.service.model.DTO.ConceptDTO;
+import com.jigglink.concept.service.model.service.ConceptService;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/concepts")
+public class ConceptController {
+    @Autowired
+    ConceptService conceptService;
+
+    @Operation(summary = "It creates a concept by a specific itinerary.")
+    @PostMapping("/{itineraryId}/itinerary")
+    public ResponseEntity<ConceptDTO> createConceptBy(@PathVariable int itineraryId, @RequestBody ConceptDTO newConcept) {
+        ConceptDTO conceptDTO = conceptService.createConceptBy(itineraryId, newConcept);
+        return ResponseEntity.ok(conceptDTO);
+    }
+
+    @Operation(summary = "It obtains all the concepts of a specific itinerary.")
+    @GetMapping("/itinerary/{itineraryId}")
+    public ResponseEntity<List<ConceptDTO>> getConceptBy(@PathVariable int itineraryId) {
+        return ResponseEntity.ok(conceptService.getConceptsBy(itineraryId));
+    }
+
+}
