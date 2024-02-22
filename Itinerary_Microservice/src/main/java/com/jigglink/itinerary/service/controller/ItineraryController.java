@@ -53,6 +53,13 @@ public class ItineraryController {
         return ResponseEntity.ok(conceptClientService.createConceptBy(itineraryId, newConcept));
     }
 
+    @Operation(summary = "It updates a concept by a specific itinerary.")
+    @CircuitBreaker(name="conceptCB", fallbackMethod ="fallbackUpdateConceptBy")
+    @PutMapping("/{itineraryId}/concept/{conceptId}")
+    public ResponseEntity<ConceptDTO> updateConceptBy(@PathVariable int conceptId, @PathVariable int itineraryId, @RequestBody ConceptDTO conceptToUpdate) {
+        return ResponseEntity.ok(conceptClientService.updateConceptBy(conceptId, itineraryId, conceptToUpdate));
+    }
+
     @Operation(summary = "It obtains all the concepts of a specific itinerary.")
     @CircuitBreaker(name="conceptCB", fallbackMethod ="fallbackGetConceptsBy")
     @GetMapping("/{itineraryId}/concepts")
