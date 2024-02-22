@@ -22,7 +22,15 @@ public class ConceptController {
     @PostMapping("/{itineraryId}/itinerary")
     public ResponseEntity<ConceptDTO> createConceptBy(@PathVariable int itineraryId, @RequestBody ConceptDTO newConcept) {
         ConceptDTO conceptDTO = conceptService.createConceptBy(itineraryId, newConcept);
-        itineraryClientService.updateItineraryPointsBy(itineraryId);
+        itineraryClientService.updateItineraryPointsBy(itineraryId, 1);
+        return ResponseEntity.ok(conceptDTO);
+    }
+
+    @Operation(summary = "It updates an specific concept by a specific itinerary.")
+    @PostMapping("/{conceptId}/itinerary/{itineraryId}")
+    public ResponseEntity<ConceptDTO> updateConceptBy(@PathVariable int conceptId, @PathVariable int itineraryId, @RequestBody ConceptDTO conceptToUpdate) {
+        ConceptDTO conceptDTO = conceptService.updateConceptBy(conceptId, itineraryId, conceptToUpdate);
+        itineraryClientService.updateItineraryPointsBy(itineraryId, 4);
         return ResponseEntity.ok(conceptDTO);
     }
 

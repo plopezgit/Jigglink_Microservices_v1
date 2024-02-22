@@ -32,4 +32,13 @@ public class ConceptClientService implements ConceptClientServiceInterface {
     public List<ConceptDTO> getConceptsBy(int itineraryId) {
         return itineraryRestTemplate.getForObject("http://concept-service/concepts/itinerary/" + itineraryId, List.class);
     }
+
+    @Override
+    public ConceptDTO updateConceptBy(int conceptId, int itineraryId, ConceptDTO conceptToUpdate) {
+        if (!itineraryRepository.existsById(itineraryId)) {
+            throw new ItineraryNotFoundException("The itinerary does not exists.");
+        } else {
+            return itineraryRestTemplate.postForObject("http://concept-service/concepts/"+ conceptId +"/itinerary/"+ itineraryId, conceptToUpdate, ConceptDTO.class);
+        }
+    }
 }

@@ -24,8 +24,15 @@ public class ConceptService implements ConceptServiceInterface {
 
     @Override
     public ConceptDTO createConceptBy(int itineraryId, ConceptDTO newConcept) {
-        ConceptDTO conceptToSave = setNewConceptData(itineraryId, newConcept);
+        ConceptDTO conceptToSave = setNewConceptDataBy(itineraryId, newConcept);
         return getConceptDTOFromEntity(conceptRepository.save(getConceptEntityFromDTO(conceptToSave)));
+    }
+
+    @Override
+    public ConceptDTO updateConceptBy(int conceptId, int itineraryId, ConceptDTO conceptToUpdate) {
+        ConceptDTO concept = getConceptBy(conceptId);
+        ConceptDTO updatedConcept = getConceptDTOFromEntity(conceptRepository.save(getConceptEntityFromDTO(updateConceptDataBy(concept, conceptToUpdate))));
+        return updatedConcept;
     }
 
     @Override
@@ -36,7 +43,6 @@ public class ConceptService implements ConceptServiceInterface {
     @Override
     public List<ConceptDTO> getConcepts() {
         return conceptRepository.findAll().stream().map(this::getConceptDTOFromEntity).collect(Collectors.toList());
-
     }
 
     @Override
@@ -58,7 +64,20 @@ public class ConceptService implements ConceptServiceInterface {
         return conceptModelMapper.map(conceptDTO, Concept.class);
     }
 
-    private ConceptDTO setNewConceptData(int itineraryId, ConceptDTO conceptToSet){
+    private ConceptDTO setNewConceptDataBy(int itineraryId, ConceptDTO conceptToSet){
         return ConceptDTO.builder().itineraryId(itineraryId).title(conceptToSet.getTitle()).effort(conceptToSet.getEffort()).notes(conceptToSet.getNotes()).build();
+    }
+    private ConceptDTO updateConceptDataBy(ConceptDTO concept, ConceptDTO conceptToUpdate){
+        return ConceptDTO.builder()
+                .id(concept.getId())
+                .itineraryId(concept.getItineraryId())
+                .title(concept.getTitle())
+                .effort(concept.getEffort())
+                .notes(concept.getNotes() + " | " + conceptToUpdate.getNotes())
+                .whatIs(concept.getWhatIs() + " | " + conceptToUpdate.getWhatIs())
+                .howIs(concept.getHowIs() + " | " + conceptToUpdate.getHowIs())
+                .whyIs(concept.getWhyIs() + " | " + conceptToUpdate.getWhyIs())
+                .updateCounter(concept.getUpdateCounter() + 1)
+                .build();
     }
 }

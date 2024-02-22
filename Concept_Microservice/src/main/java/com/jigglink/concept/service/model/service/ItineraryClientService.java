@@ -12,7 +12,7 @@ public class ItineraryClientService implements ItineraryClientServiceInterface {
     private RestTemplate itineraryRestTemplate;
 
     @Override
-    public void updateItineraryPointsBy(int itineraryId) {
-        itineraryRestTemplate.postForObject("http://itinerary-service/itineraries/update/points/" + itineraryId, +1, ItineraryDTO.class);
+    public void updateItineraryPointsBy(int itineraryId, int point) {
+        itineraryRestTemplate.postForObject("http://itinerary-service/itineraries/update/points/" + itineraryId, point, ItineraryDTO.class);
     }
 }
