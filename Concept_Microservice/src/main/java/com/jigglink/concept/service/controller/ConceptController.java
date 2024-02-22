@@ -2,6 +2,7 @@ package com.jigglink.concept.service.controller;
 
 import com.jigglink.concept.service.model.DTO.ConceptDTO;
 import com.jigglink.concept.service.model.service.ConceptService;
+import com.jigglink.concept.service.model.service.ItineraryClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,14 @@ import java.util.List;
 public class ConceptController {
     @Autowired
     ConceptService conceptService;
+    @Autowired
+    ItineraryClientService itineraryClientService;
 
     @Operation(summary = "It creates a concept by a specific itinerary.")
     @PostMapping("/{itineraryId}/itinerary")
     public ResponseEntity<ConceptDTO> createConceptBy(@PathVariable int itineraryId, @RequestBody ConceptDTO newConcept) {
         ConceptDTO conceptDTO = conceptService.createConceptBy(itineraryId, newConcept);
+        itineraryClientService.updateItineraryPointsBy(itineraryId);
         return ResponseEntity.ok(conceptDTO);
     }
 
@@ -27,5 +31,7 @@ public class ConceptController {
     public ResponseEntity<List<ConceptDTO>> getConceptBy(@PathVariable int itineraryId) {
         return ResponseEntity.ok(conceptService.getConceptsBy(itineraryId));
     }
+
+
 
 }
