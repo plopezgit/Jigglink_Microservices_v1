@@ -7,6 +7,7 @@ import com.jigglink.itinerary.service.model.service.ItineraryService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,15 @@ public class ItineraryController {
     @GetMapping("/{itineraryId}/concepts")
     public ResponseEntity<List<ConceptDTO>> getConceptBy(@PathVariable int itineraryId) {
         return ResponseEntity.ok(conceptClientService.getConceptsBy(itineraryId));
+    }
+
+    @Operation(summary = "It updates the points of a specific itinerary.")
+    @PostMapping("update/points/{itineraryId}")
+    public ResponseEntity<ResponseMessage> updateItineraryPointsBy(@PathVariable int itineraryId, @RequestBody int point) {
+        itineraryService.updateItineraryPointsBy(itineraryId, point);
+        return new ResponseEntity<>(ResponseMessage.builder()
+                .responseCode(HttpStatus.ACCEPTED.value())
+                .build(), HttpStatus.ACCEPTED);
     }
 
 }

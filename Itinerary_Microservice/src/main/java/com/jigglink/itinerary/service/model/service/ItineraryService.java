@@ -46,10 +46,18 @@ public class ItineraryService implements ItineraryServiceInterface {
         return itineraryRepository.findById(itineraryId).map(this::getItineraryDTOFromEntity)
                 .orElseThrow(() -> new ItineraryNotFoundException("The itinerary does not exist"));
     }
-
+    @Override
     public long getItineraryRemainingDaysBy(int itineraryId) {
         return calculateRemainingDaysOf(itineraryRepository.findById(itineraryId).map(this::getItineraryDTOFromEntity)
                 .orElseThrow(() -> new ItineraryNotFoundException("The itinerary does not exist")));
+    }
+
+    @Override
+    public ItineraryDTO updateItineraryPointsBy(int itineraryId, int point) {
+        ItineraryDTO itinerary = getItineraryBy(itineraryId);
+        itinerary = incrementItineraryPointsBy(itinerary, point);
+        itineraryRepository.save(getItineraryEntityFromDTO(itinerary));
+        return itinerary;
     }
 
     @Override
@@ -69,7 +77,12 @@ public class ItineraryService implements ItineraryServiceInterface {
         return ItineraryDTO.builder().studentUsername(username).title(itineraryToSet.getTitle()).targetDate(itineraryToSet.getTargetDate()).points(0).build();
     }
 
-    private long calculateRemainingDaysOf (ItineraryDTO itineraryToCalculate) {
+    private long calculateRemainingDaysOf(ItineraryDTO itineraryToCalculate) {
         return LocalDate.now().until(itineraryToCalculate.getTargetDate(), ChronoUnit.DAYS);
+    }
+
+    private ItineraryDTO incrementItineraryPointsBy(ItineraryDTO itinerary, int points) {
+        itinerary.setPoints(itinerary.getPoints() + points);
+        return itinerary;
     }
 }
