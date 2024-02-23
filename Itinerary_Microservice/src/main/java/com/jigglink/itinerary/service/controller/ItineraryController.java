@@ -63,7 +63,7 @@ public class ItineraryController {
     @Operation(summary = "It obtains all the concepts of a specific itinerary.")
     @CircuitBreaker(name="conceptCB", fallbackMethod ="fallbackGetConceptsBy")
     @GetMapping("/{itineraryId}/concepts")
-    public ResponseEntity<List<ConceptDTO>> getConceptBy(@PathVariable int itineraryId) {
+    public ResponseEntity<List<ConceptDTO>> getConceptsBy(@PathVariable int itineraryId) {
         return ResponseEntity.ok(conceptClientService.getConceptsBy(itineraryId));
     }
 
@@ -75,5 +75,4 @@ public class ItineraryController {
                 .responseCode(HttpStatus.ACCEPTED.value())
                 .build(), HttpStatus.ACCEPTED);
     }
-
 }

@@ -29,6 +29,13 @@ public class IdeaService implements IdeaServiceInterface {
     }
 
     @Override
+    public IdeaDTO updateIdeaBy(int conceptId, int ideaId, IdeaDTO ideaToUpdate) {
+        IdeaDTO idea = getIdeaBy(conceptId);
+        IdeaDTO updatedIdea = getIdeaDTOFromEntity(ideaRepository.save(getIdeaEntityFromDTO(updateIdeaDataBy(idea, ideaToUpdate))));
+        return updatedIdea;
+    }
+
+    @Override
     public List<IdeaDTO> getIdeasBy(int conceptId) {
         return ideaRepository.findIdeasByConceptId(conceptId).stream().map(this::getIdeaDTOFromEntity).collect(Collectors.toList());
     }
@@ -59,5 +66,14 @@ public class IdeaService implements IdeaServiceInterface {
 
     private IdeaDTO setNewIdeaData(int conceptId, IdeaDTO ideaToSet){
         return IdeaDTO.builder().conceptId(conceptId).title(ideaToSet.getTitle()).description(ideaToSet.getDescription()).build();
+    }
+
+    private IdeaDTO updateIdeaDataBy(IdeaDTO idea, IdeaDTO ideaToUpdate){
+        return IdeaDTO.builder()
+                .id(idea.getId())
+                .conceptId(idea.getConceptId())
+                .title(ideaToUpdate.getTitle())
+                .description(idea.getDescription() + ideaToUpdate.getDescription() + " | ")
+                .build();
     }
 }

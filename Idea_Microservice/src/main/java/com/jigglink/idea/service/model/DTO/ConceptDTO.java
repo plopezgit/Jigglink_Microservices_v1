@@ -1,8 +1,5 @@
-package com.jigglink.concept.service.model.entity;
+package com.jigglink.idea.service.model.DTO;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.ws.rs.DefaultValue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
-@Table(name = "concept")
-public class Concept {
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+public class ConceptDTO {
+
     private int id;
     private int itineraryId;
     private String title;

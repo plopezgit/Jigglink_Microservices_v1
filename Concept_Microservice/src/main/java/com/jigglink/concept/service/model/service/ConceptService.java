@@ -56,6 +56,11 @@ public class ConceptService implements ConceptServiceInterface {
         conceptRepository.deleteConceptByItineraryId(itineraryId);
     }
 
+    @Override
+    public int getItineraryIdBy(int conceptId) {
+        return conceptRepository.findById(conceptId).get().getItineraryId();
+    }
+
     private ConceptDTO getConceptDTOFromEntity(Concept concept) {
         return conceptModelMapper.map(concept, ConceptDTO.class);
     }
@@ -73,10 +78,10 @@ public class ConceptService implements ConceptServiceInterface {
                 .itineraryId(concept.getItineraryId())
                 .title(concept.getTitle())
                 .effort(concept.getEffort())
-                .notes(concept.getNotes() + " | " + conceptToUpdate.getNotes())
-                .whatIs(concept.getWhatIs() + " | " + conceptToUpdate.getWhatIs())
-                .howIs(concept.getHowIs() + " | " + conceptToUpdate.getHowIs())
-                .whyIs(concept.getWhyIs() + " | " + conceptToUpdate.getWhyIs())
+                .notes(concept.getNotes() + conceptToUpdate.getNotes() + " | ")
+                .whatIs(concept.getWhatIs() + conceptToUpdate.getWhatIs() + " | ")
+                .howIs(concept.getHowIs() + conceptToUpdate.getHowIs() + " | ")
+                .whyIs(concept.getWhyIs() + conceptToUpdate.getWhyIs() + " | ")
                 .updateCounter(concept.getUpdateCounter() + 1)
                 .build();
     }
