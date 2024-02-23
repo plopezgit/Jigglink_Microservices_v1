@@ -11,4 +11,5 @@ public interface ConceptServiceInterface {
     List<ConceptDTO> getConcepts();
     ConceptDTO getConceptBy(int itineraryId);
     void deleteConcept(int itineraryId);
+    int getItineraryIdBy(int conceptId);
 }
